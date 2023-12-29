@@ -1,12 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ExampleOne from './components/ExampleOne.vue'
+import ExampleTwo from './components/ExampleTwo.vue'
+</script>
 
 <template>
-  <h1>Hello</h1>
-  <h2>World</h2>
+  <ExampleOne />
+  <ExampleTwo />
 </template>
 
-<style scoped lang="scss">
-h1 {
-  color: green;
-}
-</style>
+<style scoped lang="scss"></style>
