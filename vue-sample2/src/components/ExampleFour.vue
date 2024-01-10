@@ -1,13 +1,50 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Fruit } from '../models/fruit'
 
-const fruits = ref(['apple', 'orange', 'grape', 'banana'])
+const fruits = ref<Fruit[]>([
+  new Fruit(1, 'Apple', true),
+  new Fruit(2, 'Orange', false),
+  new Fruit(3, 'Grape', true),
+  new Fruit(4, 'Pineapple', false),
+  new Fruit(5, 'Banana', false)
+])
+
+const name = ref<string>('')
+const isFavorite = ref<boolean>(false)
+
+function onAdd() {
+  if (name.value.trim() === '') return
+
+  const newFruit = new Fruit(fruits.value.length + 1, name.value, isFavorite.value)
+  fruits.value.push(newFruit)
+  reset()
+}
+
+function reset() {
+  name.value = ''
+  isFavorite.value = false
+}
 </script>
 
 <template>
   <h1>Example Four</h1>
-  <ul>
-    <li v-for="fruit in fruits" :key="fruit">{{ fruit }}</li>
+
+  <!-- fruit add form -->
+  <input type="text" placeholder="Enter fruit" v-model="name" />
+  <br /><br />
+  <label for="favorite">Favorite </label>
+  <input type="checkbox" id="favorite" v-model="isFavorite" />
+  <br /><br />
+  <button @click="onAdd()">Add</button>
+  <br /><br />
+
+  <!-- Fruit list -->
+  <ul style="list-style-type: none">
+    <li v-for="(fruit, index) in fruits" :key="fruit.id">
+      <span>{{ index + 1 + '. ' + fruit.name }}</span>
+      <span v-if="fruit.isFavorite"> ⭐</span>
+    </li>
   </ul>
 </template>
 
