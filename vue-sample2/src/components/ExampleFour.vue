@@ -16,9 +16,13 @@ const isFavorite = ref<boolean>(false)
 function onAdd() {
   if (name.value.trim() === '') return
 
-  const newFruit = new Fruit(fruits.value.length + 1, name.value, isFavorite.value)
+  const newFruit = new Fruit(Date.now(), name.value, isFavorite.value)
   fruits.value.push(newFruit)
   reset()
+}
+
+function onDelete(id: number) {
+  fruits.value = fruits.value.filter((fruit) => fruit.id !== id)
 }
 
 function reset() {
@@ -41,7 +45,8 @@ function reset() {
 
   <!-- Fruit list -->
   <ul style="list-style-type: none">
-    <li v-for="(fruit, index) in fruits" :key="fruit.id">
+    <li v-for="(fruit, index) in fruits" :key="fruit.id" style="margin-bottom: 15px">
+      <span style="cursor: pointer" @click="onDelete(fruit.id)">❌ </span>
       <span>{{ index + 1 + '. ' + fruit.name }}</span>
       <span v-if="fruit.isFavorite"> ⭐</span>
     </li>
