@@ -46,9 +46,19 @@ function reset() {
   <!-- Fruit list -->
   <ul style="list-style-type: none">
     <li v-for="(fruit, index) in fruits" :key="fruit.id" style="margin-bottom: 15px">
-      <span style="cursor: pointer" @click="onDelete(fruit.id)">❌ </span>
-      <span>{{ index + 1 + '. ' + fruit.name }}</span>
-      <span v-if="fruit.isFavorite"> ⭐</span>
+      <!-- Fruit View -->
+      <div v-if="!fruit.isEditMode">
+        <span style="cursor: pointer" @click="onDelete(fruit.id)">❌ </span>
+        <span style="cursor: pointer" @dblclick="fruit.isEditMode = true">{{
+          index + 1 + '. ' + fruit.name
+        }}</span>
+        <span v-if="fruit.isFavorite"> ⭐</span>
+      </div>
+      <!-- fruit Edit -->
+      <div v-else>
+        <input type="text" v-model="fruit.name" placeholder="Enter Fruit" />
+        <button @click="fruit.isEditMode = false">👍</button>
+      </div>
     </li>
   </ul>
 </template>
