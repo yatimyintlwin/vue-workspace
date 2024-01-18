@@ -34,25 +34,35 @@ function unCheck(unCheckedTodo: Todo) {
 </script>
 
 <template>
-  <!-- todo add form -->
-  <input type="text" placeholder="Enter List" v-model="name" @keyup.enter="onEnter" />
+  <div class="container">
+    <!-- todo add form -->
+    <input type="text" placeholder="Enter List" v-model="name" @keyup.enter="onEnter" />
 
-  <!-- todo view -->
-  <h1>Todo List</h1>
-  <ul style="list-style-type: none">
-    <li v-for="todo in todoList" :key="todo.id">
-      <input type="checkbox" @click="onCheck(todo)" />
-      {{ todo.name }}
-    </li>
-  </ul>
+    <!-- todo view -->
+    <h1>Todo List</h1>
+    <ul>
+      <li v-for="todo in todoList" :key="todo.id">
+        <input type="checkbox" @click="onCheck(todo)" />
+        {{ todo.name }}
+      </li>
+    </ul>
 
-  <h1>Done List</h1>
-  <ul style="list-style-type: none">
-    <li v-for="done in doneList" :key="done.id">
-      <input type="checkbox" checked @click="unCheck(done)" />
-      {{ done.name }}
-    </li>
-  </ul>
+    <h1>Done List</h1>
+    <ul>
+      <li v-for="done in doneList" :key="done.id" id="doneTodo">
+        <input type="checkbox" checked @click="unCheck(done)" />
+        {{ done.name }}
+      </li>
+    </ul>
+  </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+ul {
+  list-style-type: none;
+}
+
+#doneTodo {
+  text-decoration: line-through;
+}
+</style>
