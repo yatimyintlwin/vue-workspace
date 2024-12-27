@@ -1,13 +1,9 @@
 <template>
-  <ExampleOne />
-
-  <MyClock />
+  <ConditionalRendering2 />
 </template>
 
 <script setup lang="ts">
-import ExampleOne from './components/ExampleOne.vue'
-
-import MyClock from './components/MyClock.vue'
+import ConditionalRendering2 from './components/ConditionalRendering2.vue'
 </script>
 
 <style scoped lang="scss"></style>
