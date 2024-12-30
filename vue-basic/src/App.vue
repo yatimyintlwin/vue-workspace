@@ -1,9 +1,13 @@
 <template>
-  <ConditionalRendering2 />
+  <LifeCycle v-if="show" />
+  <button @click="show = !show">Toggle</button>
 </template>
 
 <script setup lang="ts">
-import ConditionalRendering2 from './components/ConditionalRendering2.vue'
+import { ref } from 'vue'
+import LifeCycle from './components/LifeCycle.vue'
+
+const show = ref(true)
 </script>
 
 <style scoped lang="scss"></style>
