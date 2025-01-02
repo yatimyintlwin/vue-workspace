@@ -1,13 +1,12 @@
 <template>
-  <LifeCycle v-if="show" />
-  <button @click="show = !show">Toggle</button>
+  <h1>Vue 3</h1>
+  <WatchEffect />
+  <ComputedProperty />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import LifeCycle from './components/LifeCycle.vue'
-
-const show = ref(true)
+import ComputedProperty from './components/ComputedProperty.vue'
+import WatchEffect from './components/WatchEffect.vue'
 </script>
 
 <style scoped lang="scss"></style>

@@ -4,6 +4,8 @@
   <button @click="increment" :disabled="tooMuch">Increment</button>
   <br />
   <br />
+  <input type="text" v-model="lock" placeholder="Type 'lock me' to lock" />
+
   <br />
   <h2 style="color: red" v-if="tooMuch">You clicked TOO MUCH!!!</h2>
 </template>
@@ -12,10 +14,8 @@
 import { computed, ref } from 'vue'
 
 const count = ref(0)
-const tooMuch = computed(() => {
-  console.log('Count Incresed', count.value)
-  return count.value > 10
-})
+const lock = ref('')
+const tooMuch = computed(() => count.value > 10 && lock.value === 'lock me')
 
 function increment() {
   count.value++
