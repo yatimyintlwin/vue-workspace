@@ -32,7 +32,7 @@
     <div class="form-group">
       <label>Select Class:</label>
       <select v-model="selectedClass" required>
-        <option value="" selected>Select a class</option>
+        <option value="" disabled>Select a class</option>
         <option v-for="course in courses" :key="course" :value="course">
           {{ course }}
         </option>
@@ -48,9 +48,9 @@ import { ref } from 'vue'
 
 const name = ref('')
 const email = ref('')
-const age = ref<number>()
+const age = ref()
 const gender = ref('')
-const selectedClass = ref()
+const selectedClass = ref('')
 
 const courses = ref([
   'Web Development',
@@ -77,7 +77,7 @@ function onSubmit() {
   })
   name.value = ''
   email.value = ''
-  age.value = 0
+  age.value = ''
   gender.value = ''
   selectedClass.value = ''
 }
