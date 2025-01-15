@@ -1,0 +1,57 @@
+<template>
+  <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-item label="Header">
+      <a-input v-model:value="header" allow-clear />
+    </a-form-item>
+
+    <a-form-item label="Title">
+      <a-input v-model:value="title" allow-clear />
+    </a-form-item>
+
+    <a-form-item label="Note">
+      <a-textarea v-model:value="note" :rows="8" />
+    </a-form-item>
+
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click.prevent="onSave">Save</a-button>
+      <a-button style="margin-left: 10px" @click="onCancel">Cancel</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { message } from 'ant-design-vue'
+
+const labelCol = { span: 4 }
+const wrapperCol = { span: 14 }
+
+const header = ref<string>('')
+const title = ref<string>('')
+const note = ref<string>('')
+
+const emit = defineEmits(['save', 'cancel'])
+
+function onSave() {
+  if (header.value.trim() === '' && title.value.trim() === '' && note.value.trim() === '') {
+    message.warning('This is a warning message')
+    return
+  }
+
+  emit('save', {
+    header: header.value.trim(),
+    title: title.value.trim(),
+    note: note.value.trim(),
+  })
+
+  header.value = ''
+  title.value = ''
+  note.value = ''
+}
+
+function onCancel() {
+  emit('cancel')
+}
+</script>
+
+<style scoped lang="scss"></style>
