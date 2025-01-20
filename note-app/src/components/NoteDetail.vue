@@ -14,6 +14,7 @@
 
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
       <a-button type="primary" @click.prevent="onSave">Save</a-button>
+      <a-button danger style="margin-left: 10px" @click="onDelete">Delete</a-button>
       <a-button style="margin-left: 10px" @click="onCancel">Cancel</a-button>
     </a-form-item>
   </a-form>
@@ -22,6 +23,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { message } from 'ant-design-vue'
+import type { Note } from '@/App.vue'
 
 const labelCol = { span: 4 }
 const wrapperCol = { span: 14 }
@@ -30,11 +32,15 @@ const header = ref<string>('')
 const title = ref<string>('')
 const note = ref<string>('')
 
-const emit = defineEmits(['save', 'cancel'])
+const emit = defineEmits(['save', 'cancel', 'delete'])
+
+defineProps<{
+  notes: Note[]
+}>()
 
 function onSave() {
   if (header.value.trim() === '' && title.value.trim() === '' && note.value.trim() === '') {
-    message.warning('This is a warning message')
+    message.warning('Please fill in the form')
     return
   }
 
@@ -47,6 +53,10 @@ function onSave() {
   header.value = ''
   title.value = ''
   note.value = ''
+}
+
+function onDelete() {
+  emit('delete')
 }
 
 function onCancel() {

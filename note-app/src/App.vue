@@ -2,7 +2,7 @@
   <h1>My Notes</h1>
 
   <div v-if="isNoteDetailVisible">
-    <NoteDetail @save="onSave" @cancel="onCancel" />
+    <NoteDetail :notes="notes" @save="onSave" @cancel="onCancel" @delete="onDelete" />
   </div>
 
   <div v-if="!isNoteDetailVisible">
@@ -10,15 +10,7 @@
 
     <a-divider style="height: 1px; background-color: #dbd9d9" />
 
-    <div>
-      <ul>
-        <li v-for="note in notes" :key="note.header">
-          <h3>{{ note.header }}</h3>
-          <h4>{{ note.title }}</h4>
-          <p>{{ note.note }}</p>
-        </li>
-      </ul>
-    </div>
+    <NoteCard :notes="notes" @click="showNoteDetail" />
   </div>
 </template>
 
@@ -31,6 +23,7 @@ export type Note = {
 
 import { ref } from 'vue'
 import NoteDetail from './components/NoteDetail.vue'
+import NoteCard from './components/NoteCard.vue'
 
 const notes = ref<Note[]>([])
 const isNoteDetailVisible = ref(false)
@@ -43,6 +36,8 @@ function onSave(note: Note) {
 function onCancel() {
   isNoteDetailVisible.value = false
 }
+
+function onDelete() {}
 
 function showNoteDetail() {
   isNoteDetailVisible.value = true
