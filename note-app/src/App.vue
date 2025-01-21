@@ -10,20 +10,15 @@
 
     <a-divider style="height: 1px; background-color: #dbd9d9" />
 
-    <NoteCard :notes="notes" @click="showNoteDetail" />
+    <NoteCard :notes="notes" @cardClick="editNoteDetail" />
   </div>
 </template>
 
 <script setup lang="ts">
-export type Note = {
-  header: string
-  title: string
-  note: string
-}
-
 import { ref } from 'vue'
 import NoteDetail from './components/NoteDetail.vue'
 import NoteCard from './components/NoteCard.vue'
+import type { Note } from './models/Note'
 
 const notes = ref<Note[]>([])
 const isNoteDetailVisible = ref(false)
@@ -37,10 +32,20 @@ function onCancel() {
   isNoteDetailVisible.value = false
 }
 
-function onDelete() {}
+function onDelete(id: number) {
+  notes.value = notes.value.filter((note) => note.id !== id)
+  isNoteDetailVisible.value = false
+}
 
 function showNoteDetail() {
   isNoteDetailVisible.value = true
+}
+
+function editNoteDetail(id: number) {
+  const selectedNote = notes.value.find((note) => note.id === id)
+  if (selectedNote) {
+    isNoteDetailVisible.value = true
+  }
 }
 </script>
 

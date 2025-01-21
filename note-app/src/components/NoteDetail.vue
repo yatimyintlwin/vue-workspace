@@ -23,7 +23,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { message } from 'ant-design-vue'
-import type { Note } from '@/App.vue'
 
 const labelCol = { span: 4 }
 const wrapperCol = { span: 14 }
@@ -33,10 +32,6 @@ const title = ref<string>('')
 const note = ref<string>('')
 
 const emit = defineEmits(['save', 'cancel', 'delete'])
-
-defineProps<{
-  notes: Note[]
-}>()
 
 function onSave() {
   if (header.value.trim() === '' && title.value.trim() === '' && note.value.trim() === '') {

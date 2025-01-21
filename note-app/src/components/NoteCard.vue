@@ -2,9 +2,10 @@
   <div class="card-container">
     <a-card
       v-for="note in notes"
-      :key="note.header"
+      :key="note.id"
       hoverable
       style="width: 250px; margin-bottom: 20px"
+      @click="onCardClick(note.id)"
     >
       <h3>{{ note.header }}</h3>
       <a-divider />
@@ -15,11 +16,17 @@
 </template>
 
 <script setup lang="ts">
-import type { Note } from '@/App.vue'
+import type { Note } from '@/models/Note'
+
+const emit = defineEmits(['cardClick'])
 
 defineProps<{
   notes: Note[]
 }>()
+
+function onCardClick(id: number) {
+  emit('cardClick', id)
+}
 </script>
 
 <style scoped lang="scss">
