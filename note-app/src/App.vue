@@ -1,16 +1,16 @@
 <template>
   <h1>My Notes</h1>
 
-  <div v-if="isNoteDetailVisible">
-    <NoteDetail :notes="notes" @save="onSave" @cancel="onCancel" @delete="onDelete" />
-  </div>
-
-  <div v-if="!isNoteDetailVisible">
+  <div v-if="!isDetailView">
     <a-button type="primary" style="margin-left: 20px" @click="showNoteDetail">+ Add</a-button>
 
     <a-divider style="height: 1px; background-color: #dbd9d9" />
 
-    <NoteCard :notes="notes" @cardClick="editNoteDetail" />
+    <NoteCard v-for="note in notes" :key="note.id" :note="note" @click="editNote(note.id)" />
+  </div>
+
+  <div v-if="isDetailView">
+    <NoteDetail :selectedNote="selectedNote" @save="onSave" @cancel="onCancel" @delete="onDelete" />
   </div>
 </template>
 
@@ -18,33 +18,34 @@
 import { ref } from 'vue'
 import NoteDetail from './components/NoteDetail.vue'
 import NoteCard from './components/NoteCard.vue'
-import type { Note } from './models/Note'
+import { Note } from './models/Note'
 
 const notes = ref<Note[]>([])
-const isNoteDetailVisible = ref(false)
+const isDetailView = ref<boolean>(false)
+const selectedNote = ref<Note>(new Note(-1, '', '', ''))
 
 function onSave(note: Note) {
   notes.value.push(note)
-  isNoteDetailVisible.value = false
+  isDetailView.value = false
 }
 
 function onCancel() {
-  isNoteDetailVisible.value = false
+  isDetailView.value = false
 }
 
 function onDelete(id: number) {
   notes.value = notes.value.filter((note) => note.id !== id)
-  isNoteDetailVisible.value = false
+  isDetailView.value = false
 }
 
 function showNoteDetail() {
-  isNoteDetailVisible.value = true
+  isDetailView.value = true
 }
 
-function editNoteDetail(id: number) {
-  const selectedNote = notes.value.find((note) => note.id === id)
-  if (selectedNote) {
-    isNoteDetailVisible.value = true
+function editNote(id: number) {
+  selectedNote.value = notes.value.find((note) => note.id === id) ?? new Note(-1, '', '', '')
+  if (selectedNote.value) {
+    isDetailView.value = true
   }
 }
 </script>

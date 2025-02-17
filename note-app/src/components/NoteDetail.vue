@@ -23,15 +23,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { message } from 'ant-design-vue'
+import type { Note } from '@/models/Note'
+
+const props = defineProps<{
+  selectedNote: Note
+}>()
+
+const emit = defineEmits(['save', 'cancel', 'delete'])
 
 const labelCol = { span: 4 }
 const wrapperCol = { span: 14 }
 
-const header = ref<string>('')
-const title = ref<string>('')
-const note = ref<string>('')
-
-const emit = defineEmits(['save', 'cancel', 'delete'])
+const header = ref<string>(props.selectedNote.header)
+const title = ref<string>(props.selectedNote.title)
+const note = ref<string>(props.selectedNote.note)
 
 function onSave() {
   if (header.value.trim() === '' && title.value.trim() === '' && note.value.trim() === '') {
