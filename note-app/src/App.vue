@@ -6,7 +6,9 @@
 
     <a-divider style="height: 1px; background-color: #dbd9d9" />
 
-    <NoteCard v-for="note in notes" :key="note.id" :note="note" @click="editNote(note.id)" />
+    <div class="card-container">
+      <NoteCard v-for="note in notes" :key="note.id" :note="note" @click="editNote(note.id)" />
+    </div>
   </div>
 
   <div v-if="isDetailView">
@@ -24,8 +26,19 @@ const notes = ref<Note[]>([])
 const isDetailView = ref<boolean>(false)
 const selectedNote = ref<Note>(new Note(-1, '', '', ''))
 
-function onSave(note: Note) {
-  notes.value.push(note)
+function onSave(updatedNote: Note) {
+  if (updatedNote.id === -1) {
+    updatedNote.id = Date.now()
+    notes.value.push(updatedNote)
+  } else {
+    notes.value = notes.value.map((note) => {
+      if (note.id === updatedNote.id) {
+        note = updatedNote
+      }
+      return note
+    })
+  }
+
   isDetailView.value = false
 }
 
@@ -39,6 +52,7 @@ function onDelete(id: number) {
 }
 
 function showNoteDetail() {
+  selectedNote.value = new Note(-1, '', '', '')
   isDetailView.value = true
 }
 
@@ -54,5 +68,12 @@ function editNote(id: number) {
 h1 {
   padding: 10px;
   background-color: rgb(219, 217, 217);
+}
+
+.card-container {
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 </style>

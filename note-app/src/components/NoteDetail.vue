@@ -14,7 +14,9 @@
 
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
       <a-button type="primary" @click.prevent="onSave">Save</a-button>
-      <a-button danger style="margin-left: 10px" @click="onDelete">Delete</a-button>
+      <a-button v-if="selectedNote.id !== -1" danger style="margin-left: 10px" @click="onDelete"
+        >Delete</a-button
+      >
       <a-button style="margin-left: 10px" @click="onCancel">Cancel</a-button>
     </a-form-item>
   </a-form>
@@ -23,7 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { message } from 'ant-design-vue'
-import type { Note } from '@/models/Note'
+import { Note } from '@/models/Note'
 
 const props = defineProps<{
   selectedNote: Note
@@ -44,11 +46,10 @@ function onSave() {
     return
   }
 
-  emit('save', {
-    header: header.value.trim(),
-    title: title.value.trim(),
-    note: note.value.trim(),
-  })
+  emit(
+    'save',
+    new Note(props.selectedNote.id, header.value.trim(), title.value.trim(), note.value.trim()),
+  )
 
   header.value = ''
   title.value = ''
@@ -56,7 +57,7 @@ function onSave() {
 }
 
 function onDelete() {
-  emit('delete')
+  emit('delete', props.selectedNote.id)
 }
 
 function onCancel() {

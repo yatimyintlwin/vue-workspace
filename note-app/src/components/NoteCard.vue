@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container">
+  <div>
     <a-card hoverable style="width: 250px; margin-bottom: 20px">
       <h3>{{ note.header }}</h3>
       <a-divider />
@@ -17,11 +17,4 @@ defineProps<{
 }>()
 </script>
 
-<style scoped lang="scss">
-.card-container {
-  padding: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-</style>
+<style scoped lang="scss"></style>
